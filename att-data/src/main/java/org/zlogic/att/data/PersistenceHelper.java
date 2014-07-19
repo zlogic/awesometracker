@@ -18,6 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.MapJoin;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -466,7 +467,9 @@ public class PersistenceHelper {
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 			CriteriaQuery<Task> tasksCriteriaQuery = criteriaBuilder.createQuery(Task.class);
 			Root<Task> taskRoot = tasksCriteriaQuery.from(Task.class);
-			tasksCriteriaQuery.where(criteriaBuilder.equal(taskRoot.get(Task_.id), id));
+			taskRoot.fetch(Task_.customFields, JoinType.LEFT);//Fetch custom fields since their default fetch type is lazy
+
+			tasksCriteriaQuery.where(criteriaBuilder.equal(taskRoot.get(Task_.id), id)).distinct(true);
 
 			List<Task> result = entityManager.createQuery(tasksCriteriaQuery).getResultList();
 
@@ -498,6 +501,7 @@ public class PersistenceHelper {
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 			CriteriaQuery<Task> tasksCriteriaQuery = criteriaBuilder.createQuery(Task.class);
 			Root<Task> taskRoot = tasksCriteriaQuery.from(Task.class);
+			taskRoot.fetch(Task_.customFields, JoinType.LEFT);//Fetch custom fields since their default fetch type is lazy
 
 			List<Filter> filters = getAllFilters();
 
@@ -506,8 +510,8 @@ public class PersistenceHelper {
 				for (Filter filter : filters)
 					filtersPredicate = criteriaBuilder.and(filtersPredicate, filter.getFilterPredicate(criteriaBuilder, taskRoot));
 				tasksCriteriaQuery.where(filtersPredicate);
-				tasksCriteriaQuery.distinct(true);
 			}
+			tasksCriteriaQuery.distinct(true);
 
 			List<Task> result = entityManager.createQuery(tasksCriteriaQuery).getResultList();
 

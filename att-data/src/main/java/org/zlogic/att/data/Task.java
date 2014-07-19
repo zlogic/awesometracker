@@ -8,6 +8,7 @@ package org.zlogic.att.data;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -53,7 +54,7 @@ public class Task implements Serializable {
 	/**
 	 * Values of custom fields
 	 */
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	private Map<CustomField, String> customFields;
 	/**
 	 * Boolean setting indicating the task is completed

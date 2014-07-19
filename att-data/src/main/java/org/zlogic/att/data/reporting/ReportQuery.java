@@ -13,10 +13,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.zlogic.att.data.PersistenceHelper;
 import org.zlogic.att.data.Task;
+import org.zlogic.att.data.Task_;
 import org.zlogic.att.data.TimeSegment;
 import org.zlogic.att.data.TimeSegment_;
 import org.zlogic.att.data.TransactedChange;
@@ -123,6 +125,7 @@ public class ReportQuery {
 				CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 				CriteriaQuery<TimeSegment> timeSegmentsCriteriaQuery = criteriaBuilder.createQuery(TimeSegment.class);
 				Root<TimeSegment> timeSegmentRoot = timeSegmentsCriteriaQuery.from(TimeSegment.class);
+				timeSegmentRoot.fetch(TimeSegment_.owner).fetch(Task_.customFields, JoinType.LEFT);//Fetch custom fields since their default fetch type is lazy
 				Predicate datePredicate = criteriaBuilder.conjunction();
 				Expression<Date> startTime = timeSegmentRoot.get(TimeSegment_.startTime);
 				Expression<Date> endTime = timeSegmentRoot.get(TimeSegment_.endTime);
