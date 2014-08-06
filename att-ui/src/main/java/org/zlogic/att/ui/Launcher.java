@@ -107,7 +107,7 @@ public class Launcher extends Application {
 			@Override
 			public void run() {
 				TrayIcon trayIcon = new TrayIcon(primaryStage);
-				controller.setShutdownProcedure(new Runnable() {
+				Runnable shutdownProcedure = new Runnable() {
 					private TrayIcon trayIcon;
 
 					public Runnable setTrayIcon(TrayIcon trayIcon) {
@@ -120,7 +120,9 @@ public class Launcher extends Application {
 						controller.getDataManager().shutdown();
 						trayIcon.exitApplication();
 					}
-				}.setTrayIcon(trayIcon));
+				}.setTrayIcon(trayIcon);
+				controller.setShutdownProcedure(shutdownProcedure);
+				trayIcon.setShutdownProcedure(shutdownProcedure);
 			}
 		}.setParameters(primaryStage, controller));
 	}

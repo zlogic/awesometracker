@@ -38,6 +38,10 @@ public class TrayIcon {
 	 * The Tray Icon
 	 */
 	private java.awt.TrayIcon trayIcon;
+	/**
+	 * Task to be performed before shutdown/exit
+	 */
+	private Runnable shutdownProcedure;
 
 	/**
 	 * Constructs the Tray Icon
@@ -61,7 +65,10 @@ public class TrayIcon {
 			ActionListener listener = new ActionListener() {
 				@Override
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
-					exitApplication();
+					if (shutdownProcedure != null)
+						shutdownProcedure.run();
+					else
+						exitApplication();
 				}
 			};
 
@@ -99,6 +106,16 @@ public class TrayIcon {
 		} else {
 			log.severe(messages.getString("SYSTEM_TRAY_IS_UNAVAILABLE"));
 		}
+	}
+
+	/**
+	 * Assigns the shutdown procedure to be performed before quitting Java FX
+	 * application
+	 *
+	 * @param shutdownProcedure the shutdown procedure
+	 */
+	public void setShutdownProcedure(Runnable shutdownProcedure) {
+		this.shutdownProcedure = shutdownProcedure;
 	}
 
 	/**
