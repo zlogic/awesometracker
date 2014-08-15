@@ -424,9 +424,10 @@ public class MainWindowController implements Initializable {
 
 					@Override
 					public void handle(DragEvent event) {
-						if (event.getGestureSource() instanceof TableView && taskEditorController.getDragSource(event.getGestureSource()) != null)
+						if (event.getGestureSource() instanceof TableView && taskEditorController.getDragSource(event.getGestureSource()) != null && row.getItem() != null) {
 							row.getStyleClass().add("drag-accept-task"); //NOI18N
-						event.consume();
+							event.consume();
+						}
 					}
 				}.setRow(row));
 				row.setOnDragExited(new EventHandler<DragEvent>() {
@@ -464,7 +465,7 @@ public class MainWindowController implements Initializable {
 						boolean success = false;
 						if (event.getGestureSource() instanceof TableView) {
 							TimeSegmentAdapter selectedItem = taskEditorController.getDragSource(event.getGestureSource());
-							if (selectedItem != null) {
+							if (selectedItem != null && row.getItem() != null) {
 								event.setDropCompleted(success);
 								((TimeSegmentAdapter) selectedItem).ownerTaskProperty().set(row.getItem());
 							}
