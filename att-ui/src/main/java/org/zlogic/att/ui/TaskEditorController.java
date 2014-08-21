@@ -8,6 +8,7 @@ package org.zlogic.att.ui;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
@@ -512,7 +513,7 @@ public class TaskEditorController implements Initializable {
 		timeSegments.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		//Default sort order
-		timeSegments.getSortOrder().add(columnEnd);
+		timeSegments.getSortOrder().setAll(columnEnd);
 		columnEnd.setSortType(TableColumn.SortType.DESCENDING);
 
 		//Date comparator
@@ -648,13 +649,13 @@ public class TaskEditorController implements Initializable {
 			boundTasks.add(editedTask);
 			for (CustomFieldValueAdapter customFieldValueAdapter : customProperties.getItems())
 				customFieldValueAdapter.setTask(editedTask);
-			timeSegments.setItems(editedTask.timeSegmentsProperty());
+			setItems(editedTask.timeSegmentsProperty());
 			updateStartStopText();
 		} else {
 			updateStartStopText();
 			//Set items manually instead of binding with task
 			ObservableList<TimeSegmentAdapter> extractedSegments = FXCollections.observableList(new LinkedList<TimeSegmentAdapter>());
-			timeSegments.setItems(extractedSegments);
+			setItems(extractedSegments);
 
 			String defaultFieldString;
 			if (editedTaskList.size() > 1) {
@@ -680,6 +681,17 @@ public class TaskEditorController implements Initializable {
 			totalTime.setText(defaultFieldString);
 		}
 		updateSortOrder();
+	}
+
+	/**
+	 * Sets the timeSegments list items while keeping the sort order preferences
+	 *
+	 * @param items the items to assign to timeSegments's items
+	 */
+	protected void setItems(ObservableList<TimeSegmentAdapter> items) {
+		List<TableColumn<TimeSegmentAdapter, ?>> sortOrder = new ArrayList(timeSegments.getSortOrder());
+		timeSegments.setItems(items);
+		timeSegments.getSortOrder().setAll(sortOrder);
 	}
 
 	/**

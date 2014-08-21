@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
@@ -303,7 +304,7 @@ public class MainWindowController implements Initializable {
 			}
 		});
 		//Task list
-		taskList.setItems(dataManager.getTasks());
+		setItems(dataManager.getTasks());
 		reloadTasks();
 
 		//Auto update sort order
@@ -792,6 +793,17 @@ public class MainWindowController implements Initializable {
 		dataManager.reloadTasks();
 		taskEditorController.setEditedTaskList(taskList.getSelectionModel().getSelectedItems());
 		updateSortOrder();
+	}
+
+	/**
+	 * Sets the taskList items while keeping the sort order preferences
+	 *
+	 * @param items the items to assign to taskList's items
+	 */
+	protected void setItems(ObservableList<TaskAdapter> items) {
+		List<TableColumn<TaskAdapter, ?>> sortOrder = new ArrayList(taskList.getSortOrder());
+		taskList.setItems(items);
+		taskList.getSortOrder().setAll(sortOrder);
 	}
 
 	/**
