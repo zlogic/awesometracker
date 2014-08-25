@@ -65,10 +65,15 @@ public class TrayIcon {
 			ActionListener listener = new ActionListener() {
 				@Override
 				public void actionPerformed(java.awt.event.ActionEvent arg0) {
-					if (shutdownProcedure != null)
-						shutdownProcedure.run();
-					else
-						exitApplication();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							if (shutdownProcedure != null)
+								shutdownProcedure.run();
+							else
+								exitApplication();
+						}
+					});
 				}
 			};
 

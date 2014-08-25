@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -401,10 +402,15 @@ public class TaskEditorController implements Initializable {
 
 					@Override
 					public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-						if (newValue != null && cell.getTableRow().getItem() instanceof CustomFieldValueAdapter) {
-							ObservableList<String> customFieldValues = dataManager.getFilteredCustomFieldValues(((CustomFieldValueAdapter) cell.getTableRow().getItem()).getCustomField());
-							cell.getItems().setAll(customFieldValues != null ? customFieldValues : new LinkedList<String>());
-						}
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								if (newValue != null && cell.getTableRow().getItem() instanceof CustomFieldValueAdapter) {
+									ObservableList<String> customFieldValues = dataManager.getFilteredCustomFieldValues(((CustomFieldValueAdapter) cell.getTableRow().getItem()).getCustomField());
+									cell.getItems().setAll(customFieldValues != null ? customFieldValues : new LinkedList<String>());
+								}
+							}
+						});
 					}
 				}.setCell(cell));
 				cell.setOnKeyPressed(new TableCellBadShortcutsInterceptor(cell.editingProperty()));
