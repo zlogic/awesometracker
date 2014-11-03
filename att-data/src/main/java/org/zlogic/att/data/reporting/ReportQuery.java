@@ -125,7 +125,6 @@ public class ReportQuery {
 				CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 				CriteriaQuery<TimeSegment> timeSegmentsCriteriaQuery = criteriaBuilder.createQuery(TimeSegment.class);
 				Root<TimeSegment> timeSegmentRoot = timeSegmentsCriteriaQuery.from(TimeSegment.class);
-				timeSegmentRoot.fetch(TimeSegment_.owner).fetch(Task_.customFields, JoinType.LEFT);//Fetch custom fields since their default fetch type is lazy
 				Predicate datePredicate = criteriaBuilder.conjunction();
 				Expression<Date> startTime = timeSegmentRoot.get(TimeSegment_.startTime);
 				Expression<Date> endTime = timeSegmentRoot.get(TimeSegment_.endTime);
