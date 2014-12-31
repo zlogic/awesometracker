@@ -163,16 +163,16 @@ public class TimeSegmentGraphics {
 	};
 	/**
 	 * Listens to the width property and shows/hides resize handles if width is
-	 * larger/not larger than zero.
+	 * negative/non-negative.
 	 */
-	private ChangeListener<Number> widthLargerThanZeroListener = new ChangeListener<Number>() {
+	private ChangeListener<Number> widthNotNegativeListener = new ChangeListener<Number>() {
 		@Override
 		public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
 			if (newValue == oldValue || newValue == null)
 				return;
 			if (!initialized)
 				return;
-			if ((newValue instanceof Double && (Double) newValue > 0) || newValue.floatValue() > 0) {
+			if ((newValue instanceof Double && (Double) newValue >= 0) || newValue.floatValue() >= 0) {
 				graphicsManager.addGraphicsChildren(rectLeft);
 				graphicsManager.addGraphicsChildren(rectLeftLabel);
 				graphicsManager.addGraphicsChildren(rectRight);
@@ -399,13 +399,14 @@ public class TimeSegmentGraphics {
 			}
 		}.setOwner(this));
 		//Update rectangle width
-		rect.widthProperty().addListener(widthLargerThanZeroListener);
+		rect.widthProperty().addListener(widthNotNegativeListener);
 		updateGraphics(false);
 		//Add handler for main rectangle
 		rect.setOnMouseClicked(selectHandler);
 		rectLabel.setOnMouseClicked(selectHandler);
 		//Add everything to the graph
-		graphicsManager.addGraphicsChildren(rect, rectLabel);
+		graphicsManager.addGraphicsChildren(rect, rectLabel, rectLeft, rectLeftLabel, rectRight, rectRightLabel);
+		widthNotNegativeListener.changed(rect.widthProperty(), null, rect.widthProperty().get());
 		//Listen for out-of-range events
 		BooleanBinding outOfRangeExpression = rectLeft.layoutXProperty().greaterThan(graphicsManager.graphicsLayoutXProperty().add(graphicsManager.graphicsWidthProperty())).or(rectRight.layoutXProperty().add(rectRight.widthProperty()).lessThan(graphicsManager.graphicsLayoutXProperty()));
 		outOfRange.bind(outOfRangeExpression);
