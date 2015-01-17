@@ -43,7 +43,7 @@
 				<plugin>
 					<groupId>com.akathist.maven.plugins.launch4j</groupId>
 					<artifactId>launch4j-maven-plugin</artifactId>
-					<version>1.7.2</version>
+					<version>1.7.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -93,12 +93,12 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>4.3.7.Final</version>
+				<version>4.3.8.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-jpamodelgen</artifactId>
-				<version>4.3.7.Final</version>
+				<version>4.3.8.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.dynamicreports</groupId>
