@@ -86,9 +86,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.hsqldb</groupId>
-				<artifactId>hsqldb</artifactId>
-				<version>2.3.2</version>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>1.4.185</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
