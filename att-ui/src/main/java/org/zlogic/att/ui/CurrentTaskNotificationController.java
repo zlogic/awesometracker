@@ -5,7 +5,6 @@
  */
 package org.zlogic.att.ui;
 
-import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -42,7 +40,7 @@ import org.zlogic.att.ui.adapters.TimeSegmentAdapter;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class CurrentTaskNotificationController implements Initializable {
+public class CurrentTaskNotificationController {
 
 	/**
 	 * Localization messages
@@ -91,8 +89,8 @@ public class CurrentTaskNotificationController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		//Prepare the stage
 		stage = new Stage();
 		stage.initModality(Modality.NONE);

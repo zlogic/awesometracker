@@ -8,7 +8,6 @@ package org.zlogic.att.ui;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
-import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
@@ -22,7 +21,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,7 +42,7 @@ import org.zlogic.att.ui.adapters.TimeSegmentAdapter;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class InactivityDialogController implements Initializable {
+public class InactivityDialogController {
 
 	/**
 	 * The logger
@@ -118,8 +116,8 @@ public class InactivityDialogController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		//Prepare the stage
 		stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);

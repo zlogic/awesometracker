@@ -5,7 +5,6 @@
  */
 package org.zlogic.att.ui;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +29,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
@@ -51,7 +49,7 @@ import org.zlogic.att.ui.timegraph.TimeStepRangeCalculator;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class TimeGraphController implements Initializable {
+public class TimeGraphController {
 
 	/**
 	 * The logger
@@ -200,8 +198,8 @@ public class TimeGraphController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		graphicsManager = new TimeSegmentGraphicsManager(mouseHandler, scale, timeGraphPane, layoutPos, visibleProperty);
 		timeGraphPane.setCursor(Cursor.MOVE);
 

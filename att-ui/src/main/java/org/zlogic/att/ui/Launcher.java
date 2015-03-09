@@ -56,7 +56,7 @@ public class Launcher extends Application {
 			//Load FXML
 			loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"), messages); //NOI18N
 			loader.setLocation(getClass().getResource("MainWindow.fxml")); //NOI18N
-			root = (Parent) loader.load();
+			root = loader.load();
 		} catch (IOException ex) {
 			log.log(java.util.logging.Level.SEVERE, null, ex);
 			throw ex;

@@ -6,7 +6,6 @@
 package org.zlogic.att.ui;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +13,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +27,7 @@ import javafx.stage.Stage;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class ConfirmationDialogController implements Initializable {
+public class ConfirmationDialogController {
 
 	/**
 	 * The logger
@@ -109,8 +107,8 @@ public class ConfirmationDialogController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		//Prepare the stage
 		stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);

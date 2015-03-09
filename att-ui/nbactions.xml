@@ -34,7 +34,7 @@
 			<goal>org.codehaus.mojo:exec-maven-plugin:1.2:exec</goal>
 		</goals>
 		<properties>
-			<exec.args>${profiler.args} -classpath %classpath org.zlogic.att.ui.Launcher</exec.args>
+			<exec.args>-classpath %classpath org.zlogic.att.ui.Launcher</exec.args>
 			<exec.executable>${profiler.java}</exec.executable>
 			<exec.workingdir>..\..\Test homedir</exec.workingdir>
 		</properties>

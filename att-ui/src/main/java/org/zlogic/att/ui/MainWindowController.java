@@ -7,7 +7,6 @@ package org.zlogic.att.ui;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -80,7 +78,7 @@ import org.zlogic.att.ui.adapters.TimeSegmentAdapter;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class MainWindowController implements Initializable {
+public class MainWindowController {
 
 	/**
 	 * The logger
@@ -271,8 +269,8 @@ public class MainWindowController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		//Default sort order
 		taskList.getSortOrder().add(columnLastTime);
 		columnLastTime.setSortType(TableColumn.SortType.DESCENDING);
@@ -654,7 +652,7 @@ public class MainWindowController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("CustomFieldEditor.fxml"), messages); //NOI18N
 		loader.setLocation(getClass().getResource("CustomFieldEditor.fxml")); //NOI18N
 		try {
-			root = (Parent) loader.load();
+			root = loader.load();
 		} catch (IOException ex) {
 			Logger.getLogger(getClass().getName()).log(Level.SEVERE, messages.getString("ERROR_LOADING_FXML"), ex);
 			ExceptionLogger.getInstance().showException(messages.getString("ERROR_LOADING_FXML"), ex);
@@ -681,7 +679,7 @@ public class MainWindowController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Report.fxml"), messages); //NOI18N
 		loader.setLocation(getClass().getResource("Report.fxml")); //NOI18N
 		try {
-			root = (Parent) loader.load();
+			root = loader.load();
 		} catch (IOException ex) {
 			log.log(Level.SEVERE, messages.getString("ERROR_LOADING_FXML"), ex);
 			ExceptionLogger.getInstance().showException(messages.getString("ERROR_LOADING_FXML"), ex);
@@ -709,7 +707,7 @@ public class MainWindowController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("FilterEditor.fxml"), messages); //NOI18N
 		loader.setLocation(getClass().getResource("FilterEditor.fxml")); //NOI18N
 		try {
-			root = (Parent) loader.load();
+			root = loader.load();
 		} catch (IOException ex) {
 			log.log(Level.SEVERE, messages.getString("ERROR_LOADING_FXML"), ex);
 			ExceptionLogger.getInstance().showException(messages.getString("ERROR_LOADING_FXML"), ex);
@@ -773,7 +771,7 @@ public class MainWindowController implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("About.fxml"), messages); //NOI18N
 		loader.setLocation(getClass().getResource("About.fxml")); //NOI18N
 		try {
-			root = (Parent) loader.load();
+			root = loader.load();
 		} catch (IOException ex) {
 			log.log(Level.SEVERE, messages.getString("ERROR_LOADING_FXML"), ex);
 			ExceptionLogger.getInstance().showException(messages.getString("ERROR_LOADING_FXML"), ex);

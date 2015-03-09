@@ -7,7 +7,6 @@ package org.zlogic.att.ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -38,7 +36,7 @@ import org.zlogic.att.ui.report.Report;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class ReportController implements Initializable {
+public class ReportController {
 
 	/**
 	 * The logger
@@ -121,8 +119,8 @@ public class ReportController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		//Configure background task
 		statusPane.managedProperty().bind(statusPane.visibleProperty());
 		statusPane.visibleProperty().bind(reportTaskThread.isNotNull());

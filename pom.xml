@@ -43,7 +43,7 @@
 				<plugin>
 					<groupId>com.akathist.maven.plugins.launch4j</groupId>
 					<artifactId>launch4j-maven-plugin</artifactId>
-					<version>1.7.3</version>
+					<version>1.7.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -77,7 +77,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>2.9</version>
+					<version>2.10</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -88,7 +88,7 @@
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
-				<version>1.4.185</version>
+				<version>1.4.186</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -103,12 +103,12 @@
 			<dependency>
 				<groupId>net.sourceforge.dynamicreports</groupId>
 				<artifactId>dynamicreports-core</artifactId>
-				<version>3.2.1</version>
+				<version>4.0.0</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
-				<version>6.0.0</version>
+				<version>6.0.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.zlogic.att</groupId>

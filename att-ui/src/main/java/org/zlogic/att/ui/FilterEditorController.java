@@ -5,10 +5,7 @@
  */
 package org.zlogic.att.ui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -26,7 +23,7 @@ import org.zlogic.att.ui.filter.FilterValueCell;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class FilterEditorController implements Initializable {
+public class FilterEditorController {
 
 	/**
 	 * DataManager reference
@@ -59,8 +56,8 @@ public class FilterEditorController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		filters.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		deleteButton.disableProperty().bind(filters.getSelectionModel().selectedItemProperty().isNull());
 

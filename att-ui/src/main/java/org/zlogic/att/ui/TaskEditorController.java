@@ -5,7 +5,6 @@
  */
 package org.zlogic.att.ui;
 
-import java.net.URL;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
@@ -63,7 +61,7 @@ import org.zlogic.att.ui.adapters.TimeSegmentAdapter;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class TaskEditorController implements Initializable {
+public class TaskEditorController {
 
 	/**
 	 * The logger
@@ -311,8 +309,8 @@ public class TaskEditorController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		updateStartStopText();
 		//Row properties
 		timeSegments.setRowFactory(new Callback<TableView<TimeSegmentAdapter>, TableRow<TimeSegmentAdapter>>() {
@@ -732,7 +730,7 @@ public class TaskEditorController implements Initializable {
 			return;
 		}
 		TimeSegmentAdapter focusedAdapter = timeSegments.getFocusModel().getFocusedItem();
-		TableColumn focusedColumn = timeSegments.getFocusModel().getFocusedCell().getTableColumn();
+		TableColumn focusedColumn = timeSegments.getFocusModel().getFocusedCell() != null ? timeSegments.getFocusModel().getFocusedCell().getTableColumn() : null;
 		timeSegments.getSortPolicy().call(timeSegments);
 		//Restore lost focus
 		if (focusedAdapter != null && timeSegments.getFocusModel().getFocusedItem() == null)

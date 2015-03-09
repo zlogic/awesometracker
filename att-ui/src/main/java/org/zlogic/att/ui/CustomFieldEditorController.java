@@ -5,14 +5,12 @@
  */
 package org.zlogic.att.ui;
 
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -31,7 +29,7 @@ import org.zlogic.att.ui.adapters.DataManager;
  * @author Dmitry Zolotukhin <a
  * href="mailto:zlogic@gmail.com">zlogic@gmail.com</a>
  */
-public class CustomFieldEditorController implements Initializable {
+public class CustomFieldEditorController {
 
 	/**
 	 * Localization messages
@@ -67,8 +65,8 @@ public class CustomFieldEditorController implements Initializable {
 	 * @param url initialization URL
 	 * @param resourceBundle supplied resources
 	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	@FXML
+	public void initialize() {
 		customFields.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		deleteButton.disableProperty().bind(customFields.getSelectionModel().selectedItemProperty().isNull());
