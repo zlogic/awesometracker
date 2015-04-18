@@ -602,6 +602,26 @@ public class PersistenceHelper {
 	}
 
 	/**
+	 * Returns a ConfigurationElement for its name
+	 *
+	 * @param name the ConfigurationElement name, or null if it doesn't exist
+	 * @return the ConfigurationElement name
+	 */
+	public ConfigurationElement getConfigurationElement(String name) {
+		try {
+			shuttingDownLock.readLock().lock();
+			if (shuttingDown)
+				throw new ApplicationShuttingDownException();
+			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			ConfigurationElement result = entityManager.find(ConfigurationElement.class, name);
+			entityManager.close();
+			return result;
+		} finally {
+			shuttingDownLock.readLock().unlock();
+		}
+	}
+
+	/**
 	 * Prepares the EntityManager, transaction and calls the Importer's
 	 * importData method with the created EntityManager
 	 *

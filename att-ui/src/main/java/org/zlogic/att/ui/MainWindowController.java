@@ -60,6 +60,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.converter.DateTimeStringConverter;
 import javafx.util.converter.DefaultStringConverter;
+import org.zlogic.att.data.ConfigurationElement;
 import org.zlogic.att.data.converters.Exporter;
 import org.zlogic.att.data.converters.GrindstoneImporter;
 import org.zlogic.att.data.converters.Importer;
@@ -99,7 +100,6 @@ public class MainWindowController {
 	/**
 	 * Easy access to preference storage
 	 */
-	protected java.util.prefs.Preferences preferenceStorage = java.util.prefs.Preferences.userNodeForPackage(Launcher.class);
 	/**
 	 * The background task thread (used for synchronization & clean termination)
 	 */
@@ -355,10 +355,12 @@ public class MainWindowController {
 		lastDirectory.addListener(new ChangeListener<File>() {
 			@Override
 			public void changed(ObservableValue<? extends File> ov, File oldFile, File newFile) {
-				preferenceStorage.put("lastDirectory", newFile.toString()); //NOI18N
+				ConfigurationElement element = new ConfigurationElement("lastDirectory", newFile); //NOI18N
+				dataManager.getPersistenceHelper().mergeEntity(element);
 			}
 		});
-		lastDirectory.set(preferenceStorage.get("lastDirectory", null) == null ? null : new File(preferenceStorage.get("lastDirectory", null))); //NOI18N
+		ConfigurationElement lastDirectoryConfigurationElement = dataManager.getPersistenceHelper().getConfigurationElement("lastDirectory"); //NOI18N
+		lastDirectory.set(lastDirectoryConfigurationElement == null ? null : ((File) lastDirectoryConfigurationElement.getValue()));
 		//Row properties
 		taskList.setRowFactory(new Callback<TableView<TaskAdapter>, TableRow<TaskAdapter>>() {
 			@Override
