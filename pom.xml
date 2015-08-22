@@ -7,7 +7,7 @@
 	<groupId>org.zlogic.att</groupId>
 	<artifactId>top</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<name>Awesome Time Tracker :: Top</name>
 
 	<organization>
@@ -24,7 +24,7 @@
 	<properties>
 		<version.java>1.8</version.java>
 		<version.java.launch4j>1.8.0</version.java.launch4j>
-		<version.windows>1.1.0.0</version.windows>
+		<version.windows>1.2.0.0</version.windows>
 		<version.javafx>8.0</version.javafx>
 	</properties>
 
@@ -43,7 +43,7 @@
 				<plugin>
 					<groupId>com.akathist.maven.plugins.launch4j</groupId>
 					<artifactId>launch4j-maven-plugin</artifactId>
-					<version>1.7.5</version>
+					<version>1.7.7</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -67,12 +67,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-shade-plugin</artifactId>
-					<version>2.3</version>
+					<version>2.4.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>2.5.3</version>
+					<version>2.5.5</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -88,27 +88,27 @@
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
-				<version>1.4.187</version>
+				<version>1.4.188</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>4.3.9.Final</version>
+				<version>5.0.0.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-jpamodelgen</artifactId>
-				<version>4.3.9.Final</version>
+				<version>5.0.0.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.dynamicreports</groupId>
 				<artifactId>dynamicreports-core</artifactId>
-				<version>4.0.0</version>
+				<version>4.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
-				<version>6.0.4</version>
+				<version>6.1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.zlogic.att</groupId>
