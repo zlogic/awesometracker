@@ -86,17 +86,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public Task createTask() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			Task task = createTask(entityManager);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			return task;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -123,17 +125,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public TimeSegment createTimeSegment(Task parent) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			TimeSegment segment = createTimeSegment(entityManager, parent);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			return segment;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -161,17 +165,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public CustomField createCustomField() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			CustomField customField = createCustomField(entityManager);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			return customField;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -198,17 +204,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public FilterDate createFilterDate(FilterDate.DateType type) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			FilterDate filter = createFilterDate(entityManager, type);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			return filter;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -236,17 +244,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public FilterCustomField createFilterCustomField(CustomField customField) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			FilterCustomField filter = createFilterCustomField(entityManager, customField);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			return filter;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -274,17 +284,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public FilterTaskCompleted createFilterTaskCompleted() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			FilterTaskCompleted filter = createFilterTaskCompleted(entityManager);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 			return filter;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -312,16 +324,18 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public void performTransactedChange(TransactedChange requestedChange) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			requestedChange.performChange(entityManager);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -335,16 +349,18 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public void mergeEntity(Object entity) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
-			entityManager.close();
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -359,17 +375,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public List<Task> getAllTasks(boolean applyFilters) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 
 			List<Task> result = getAllTasks(entityManager, applyFilters);
 
-			entityManager.close();
 			return result;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -382,17 +400,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public List<Filter> getAllFilters() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 
 			List<Filter> result = getAllFilters(entityManager);
 
-			entityManager.close();
 			return result;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -433,17 +453,19 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public Task getTaskFromDatabase(long id) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 
 			Task task = getTaskFromDatabase(id, entityManager);
 
-			entityManager.close();
 			return task;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -544,20 +566,23 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public List<CustomField> getCustomFields() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 			CriteriaQuery<CustomField> fieldsCriteriaQuery = criteriaBuilder.createQuery(CustomField.class);
 			fieldsCriteriaQuery.from(CustomField.class);
 
 			List<CustomField> result = entityManager.createQuery(fieldsCriteriaQuery).getResultList();
-			entityManager.close();
+
 			return result;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -570,11 +595,12 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public Map<CustomField, Set<String>> getAllCustomFieldValues() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 
 			CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 			CriteriaQuery<Tuple> fieldsCriteriaQuery = criteriaBuilder.createTupleQuery();
@@ -585,7 +611,6 @@ public class PersistenceHelper {
 			fieldsCriteriaQuery.multiselect(customFieldRoot, customFieldJoin.value()).distinct(true);
 
 			List<Tuple> resultList = entityManager.createQuery(fieldsCriteriaQuery).getResultList();
-			entityManager.close();
 
 			TreeMap<CustomField, Set<String>> result = new TreeMap<>();
 			for (Tuple entry : resultList) {
@@ -597,6 +622,8 @@ public class PersistenceHelper {
 			}
 			return result;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -608,15 +635,17 @@ public class PersistenceHelper {
 	 * @return the ConfigurationElement name
 	 */
 	public ConfigurationElement getConfigurationElement(String name) {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			ConfigurationElement result = entityManager.find(ConfigurationElement.class, name);
-			entityManager.close();
 			return result;
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -630,18 +659,20 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public void importData(Importer importer) throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 
 			importer.importData(this, entityManager);
 
 			entityManager.getTransaction().commit();
-			entityManager.close();
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -653,11 +684,12 @@ public class PersistenceHelper {
 	 * and database requests are ignored
 	 */
 	public void cleanupDB() throws ApplicationShuttingDownException {
+		EntityManager entityManager = null;
 		try {
 			shuttingDownLock.readLock().lock();
 			if (shuttingDown)
 				throw new ApplicationShuttingDownException();
-			EntityManager entityManager = entityManagerFactory.createEntityManager();
+			entityManager = entityManagerFactory.createEntityManager();
 			entityManager.getTransaction().begin();
 			List<Task> tasks = getAllTasks(entityManager, false);
 
@@ -678,8 +710,9 @@ public class PersistenceHelper {
 				entityManager.remove(timeSegment);
 
 			entityManager.getTransaction().commit();
-			entityManager.close();
 		} finally {
+			if (entityManager != null)
+				entityManager.close();
 			shuttingDownLock.readLock().unlock();
 		}
 	}

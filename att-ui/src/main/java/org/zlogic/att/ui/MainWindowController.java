@@ -876,6 +876,13 @@ public class MainWindowController {
 				public void run() {
 					beginBackgroundTask();
 					task.run();
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							if (task.getException() != null)
+								ExceptionLogger.getInstance().uncaughtException(backgroundThread, task.getException());
+						}
+					});
 					endBackgroundTask();
 				}
 			}.setTask(task));
@@ -1101,7 +1108,6 @@ public class MainWindowController {
 			}.setImporter(importer);
 			//Run the task
 			startTaskThread(task);
-
 		}
 	}
 
