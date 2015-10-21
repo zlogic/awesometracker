@@ -79,8 +79,9 @@ public class FilterCustomField extends Filter {
 		if (customFieldValue == null || customFieldValue.isEmpty())
 			return criteriaBuilder.conjunction();//This will be dealt with later
 		MapJoin<Task, CustomField, String> customFieldJoin = taskRoot.join(Task_.customFields);
-		return criteriaBuilder.and(
+		return customFieldJoin.on(criteriaBuilder.and(
 				criteriaBuilder.equal(customFieldJoin.key(), customField),
-				criteriaBuilder.equal(customFieldJoin.value(), customFieldValue));
+				criteriaBuilder.equal(customFieldJoin.value(), customFieldValue)))
+				.getOn();
 	}
 }

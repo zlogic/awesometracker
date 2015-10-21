@@ -65,7 +65,7 @@ public class TimeSegment implements Serializable, Comparable<TimeSegment> {
 	protected TimeSegment() {
 		id = -1;
 		startTime = new Date();
-		endTime = new Date();
+		endTime = new Date(startTime.getTime());
 		description = ""; //NOI18N
 	}
 

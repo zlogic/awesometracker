@@ -581,7 +581,7 @@ public class PersistenceHelper {
 			Root<Task> taskRoot = fieldsCriteriaQuery.from(Task.class);
 			Root<CustomField> customFieldRoot = fieldsCriteriaQuery.from(CustomField.class);
 			MapJoin<Task, CustomField, String> customFieldJoin = taskRoot.join(Task_.customFields);
-			fieldsCriteriaQuery.where(criteriaBuilder.equal(customFieldJoin.key(), customFieldRoot));
+			customFieldJoin = customFieldJoin.on(criteriaBuilder.equal(customFieldJoin.key(), customFieldRoot));
 			fieldsCriteriaQuery.multiselect(customFieldRoot, customFieldJoin.value()).distinct(true);
 
 			List<Tuple> resultList = entityManager.createQuery(fieldsCriteriaQuery).getResultList();
@@ -592,7 +592,7 @@ public class PersistenceHelper {
 				CustomField customField = entry.get(0, CustomField.class);
 				String customFieldValue = entry.get(1, String.class);
 				if (!result.containsKey(customField))
-					result.put(customField, new TreeSet<String>());
+					result.put(customField, new TreeSet<>());
 				result.get(customField).add(customFieldValue);
 			}
 			return result;
