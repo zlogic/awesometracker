@@ -886,7 +886,6 @@ public class MainWindowController {
 					endBackgroundTask();
 				}
 			}.setTask(task));
-			backgroundThread.setDaemon(true);
 			backgroundThread.start();
 		}
 	}
@@ -1006,6 +1005,7 @@ public class MainWindowController {
 			shutdownProcedure.run();
 		} else {
 			//Default shutdown procedure
+			completeTaskThread();
 			dataManager.shutdown();
 			Platform.exit();
 		}

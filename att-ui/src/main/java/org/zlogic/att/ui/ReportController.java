@@ -224,7 +224,6 @@ public class ReportController {
 			}
 		});
 		reportTaskThread.set(new Thread(reportTask));
-		reportTaskThread.get().setDaemon(true);
 		reportTaskThread.get().start();
 	}
 

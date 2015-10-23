@@ -117,6 +117,7 @@ public class Launcher extends Application {
 
 					@Override
 					public void run() {
+						controller.completeTaskThread();
 						controller.getDataManager().shutdown();
 						trayIcon.exitApplication();
 					}
