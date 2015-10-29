@@ -8,6 +8,7 @@ package org.zlogic.att.data;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -15,6 +16,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -37,9 +39,13 @@ public class PersistenceHelper {
 	 */
 	private final static Logger log = Logger.getLogger(PersistenceHelper.class.getName());
 	/**
+	 * Localization messages
+	 */
+	private static final ResourceBundle messages = ResourceBundle.getBundle("org/zlogic/att/data/messages");
+	/**
 	 * Entity manager factory
 	 */
-	private EntityManagerFactory entityManagerFactory = javax.persistence.Persistence.createEntityManagerFactory("AwesomeTimeTrackerPersistenceUnit"); //NOI18N
+	private EntityManagerFactory entityManagerFactory = null;
 	/**
 	 * True if shutdown is started. Disables any transactions.
 	 */
@@ -53,6 +59,7 @@ public class PersistenceHelper {
 	 * Default constructor
 	 */
 	public PersistenceHelper() {
+		entityManagerFactory = Persistence.createEntityManagerFactory("AwesomeTimeTrackerPersistenceUnit"); //NOI18N
 	}
 
 	/**
@@ -66,6 +73,22 @@ public class PersistenceHelper {
 		} finally {
 			shuttingDownLock.writeLock().unlock();
 		}
+	}
+
+	/**
+	 * Closes an EntityManager, rolling back its transaction if it's still
+	 * active
+	 *
+	 * @param entityManager EntityManager to close
+	 */
+	private void closeEntityManager(EntityManager entityManager) {
+		if (entityManager == null || !entityManager.isOpen())
+			return;
+		if (entityManager.getTransaction().isActive()) {
+			log.finer(messages.getString("ENTITYMANAGER_IS_STILL_ACTIVE_ROLLING_BACK_TRANSACTION"));
+			entityManager.getTransaction().rollback();
+		}
+		entityManager.close();
 	}
 
 	/**
@@ -97,8 +120,7 @@ public class PersistenceHelper {
 			entityManager.getTransaction().commit();
 			return task;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -136,8 +158,7 @@ public class PersistenceHelper {
 			entityManager.getTransaction().commit();
 			return segment;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -176,8 +197,7 @@ public class PersistenceHelper {
 			entityManager.getTransaction().commit();
 			return customField;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -215,8 +235,7 @@ public class PersistenceHelper {
 			entityManager.getTransaction().commit();
 			return filter;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -255,8 +274,7 @@ public class PersistenceHelper {
 			entityManager.getTransaction().commit();
 			return filter;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -295,8 +313,7 @@ public class PersistenceHelper {
 			entityManager.getTransaction().commit();
 			return filter;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -334,8 +351,7 @@ public class PersistenceHelper {
 			requestedChange.performChange(entityManager);
 			entityManager.getTransaction().commit();
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -359,8 +375,7 @@ public class PersistenceHelper {
 			entityManager.merge(entity);
 			entityManager.getTransaction().commit();
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -386,8 +401,7 @@ public class PersistenceHelper {
 
 			return result;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -411,8 +425,7 @@ public class PersistenceHelper {
 
 			return result;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -464,8 +477,7 @@ public class PersistenceHelper {
 
 			return task;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -581,8 +593,7 @@ public class PersistenceHelper {
 
 			return result;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -622,8 +633,7 @@ public class PersistenceHelper {
 			}
 			return result;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -644,8 +654,7 @@ public class PersistenceHelper {
 			ConfigurationElement result = entityManager.find(ConfigurationElement.class, name);
 			return result;
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -671,8 +680,7 @@ public class PersistenceHelper {
 
 			entityManager.getTransaction().commit();
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}
@@ -711,8 +719,7 @@ public class PersistenceHelper {
 
 			entityManager.getTransaction().commit();
 		} finally {
-			if (entityManager != null)
-				entityManager.close();
+			closeEntityManager(entityManager);
 			shuttingDownLock.readLock().unlock();
 		}
 	}

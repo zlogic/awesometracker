@@ -886,6 +886,7 @@ public class MainWindowController {
 					endBackgroundTask();
 				}
 			}.setTask(task));
+			backgroundThread.setDaemon(true);
 			backgroundThread.start();
 		}
 	}
