@@ -84,11 +84,14 @@ public class PersistenceHelper {
 	private void closeEntityManager(EntityManager entityManager) {
 		if (entityManager == null || !entityManager.isOpen())
 			return;
-		if (entityManager.getTransaction().isActive()) {
-			log.finer(messages.getString("ENTITYMANAGER_IS_STILL_ACTIVE_ROLLING_BACK_TRANSACTION"));
-			entityManager.getTransaction().rollback();
+		try {
+			if (entityManager.getTransaction() != null && entityManager.getTransaction().isActive()) {
+				log.severe(messages.getString("ENTITYMANAGER_IS_STILL_ACTIVE_ROLLING_BACK_TRANSACTION"));
+				entityManager.getTransaction().rollback();
+			}
+		} finally {
+			entityManager.close();
 		}
-		entityManager.close();
 	}
 
 	/**

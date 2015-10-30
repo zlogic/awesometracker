@@ -137,8 +137,12 @@ public class InactivityDialogController {
 			private Date previousMoveEvent = new Date();
 			private long inactivityTimeout = 5 * 60 * 1000;//TODO: make the timeout configurable
 			private Runnable updateDateLabel = new Runnable() {
+				private TimerRapidFiringDetector timerMissedEventConsumer = new TimerRapidFiringDetector();
+
 				@Override
 				public void run() {
+					if (timerMissedEventConsumer.isRapidFiring())
+						return;
 					//Update the inactivity time property
 					if (inactivityStarted == null)
 						return;

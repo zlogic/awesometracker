@@ -29,6 +29,7 @@ import org.zlogic.att.data.ApplicationShuttingDownException;
 import org.zlogic.att.data.Task;
 import org.zlogic.att.data.TimeSegment;
 import org.zlogic.att.data.TransactedChange;
+import org.zlogic.att.ui.TimerRapidFiringDetector;
 
 /**
  * Adapter to interface JPA with Java FX observable properties for TimeSegment
@@ -297,8 +298,12 @@ public class TimeSegmentAdapter {
 		timer = new Timer(true);
 		timer.scheduleAtFixedRate(new TimerTask() {
 			private Runnable task = new Runnable() {
+				private TimerRapidFiringDetector timerMissedEventConsumer = new TimerRapidFiringDetector(500);
+
 				@Override
 				public void run() {
+					if (timerMissedEventConsumer.isRapidFiring())
+						return;
 					if (isTimingProperty().get())
 						endProperty.setValue(new Date());
 				}
