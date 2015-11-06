@@ -127,18 +127,19 @@ public class InactivityDialogController {
 			stage.setTitle(messages.getString("TIMEOUT_DETECTED"));
 			stage.setScene(scene);
 		}
-
+		
 		acceptButton.disableProperty().bind(selectedAction.selectedToggleProperty().isNull());
 
 		//Detect mouse movement
 		mouseCheckTimer = new Timer(true);
+		long mouseMovementInterval = 500;
 		TimerTask checkMouseMovement = new TimerTask() {
 			private int prevX = 0, prevY = 0;
 			private Date previousMoveEvent = new Date();
 			private long inactivityTimeout = 5 * 60 * 1000;//TODO: make the timeout configurable
 			private Runnable updateDateLabel = new Runnable() {
-				private TimerRapidFiringDetector timerMissedEventConsumer = new TimerRapidFiringDetector();
-
+				private TimerRapidFiringDetector timerMissedEventConsumer = new TimerRapidFiringDetector(mouseMovementInterval / 4);
+				
 				@Override
 				public void run() {
 					if (timerMissedEventConsumer.isRapidFiring())
@@ -150,7 +151,7 @@ public class InactivityDialogController {
 					inactivityTimeLabel.setText(inactivityTimeString);
 				}
 			};
-
+			
 			@Override
 			public void run() {
 				try {
@@ -159,13 +160,13 @@ public class InactivityDialogController {
 						log.finest(messages.getString("MOUSEINFO_GETPOINTERINFO_IS_NULL_ERROR"));
 						return;
 					}
-
+					
 					Point mouseLocation = pointerInfo.getLocation();
 					if (stage.isShowing()) {
 						previousMoveEvent = new Date();//Reset date so keyboard navigation doesn't cause it to be considered an "inactivity"
 						Platform.runLater(updateDateLabel);
 					}
-
+					
 					if ((new Date().getTime() - previousMoveEvent.getTime()) > inactivityTimeout) {
 						inactivityStarted = previousMoveEvent;
 						//Inactivity detected, show the dialog
@@ -188,7 +189,7 @@ public class InactivityDialogController {
 				}
 			}
 		};
-		mouseCheckTimer.scheduleAtFixedRate(checkMouseMovement, 0, 500);//TODO: make the time configurable
+		mouseCheckTimer.scheduleAtFixedRate(checkMouseMovement, 0, mouseMovementInterval);//TODO: make the time configurable
 	}
 
 	/**
@@ -210,7 +211,7 @@ public class InactivityDialogController {
 						currentTaskLabel.setText(messages.getString("NO_TASK_CURRENTLY_ACTIVE"));
 				}
 			};
-
+			
 			@Override
 			public void changed(ObservableValue<? extends TimeSegmentAdapter> ov, TimeSegmentAdapter oldValue, TimeSegmentAdapter newValue) {
 				if (newValue != null && newValue.equals(oldValue))
@@ -226,7 +227,7 @@ public class InactivityDialogController {
 				}
 			}
 		});
-
+		
 	}
 
 	/**
