@@ -14,13 +14,6 @@
 		<name>Zlogic</name>
 	</organization>
 
-	<repositories>
-		<repository>
-			<id>jasperreports</id>
-			<url>http://jasperreports.sourceforge.net/maven2</url>
-		</repository>
-	</repositories>
-
 	<properties>
 		<version.java>1.8</version.java>
 		<version.java.launch4j>1.8.0</version.java.launch4j>
@@ -98,6 +91,11 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-jpamodelgen</artifactId>
+				<version>5.0.3.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-c3p0</artifactId>
 				<version>5.0.3.Final</version>
 			</dependency>
 			<dependency>

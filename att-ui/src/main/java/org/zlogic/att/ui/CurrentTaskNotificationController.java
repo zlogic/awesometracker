@@ -152,7 +152,7 @@ public class CurrentTaskNotificationController {
 		if (displayInterval > 0) {
 			notificationTimer = new Timer(true);
 			TimerTask showNotificationTask = new TimerTask() {
-				private TimerRapidFiringDetector timerMissedEventConsumer = new TimerRapidFiringDetector();
+				private TimerRapidFiringDetector timerMissedEventConsumer = new TimerRapidFiringDetector(displayInterval / 4);
 
 				@Override
 				public void run() {
