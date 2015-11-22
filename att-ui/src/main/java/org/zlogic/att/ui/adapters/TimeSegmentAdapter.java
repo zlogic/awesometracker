@@ -147,7 +147,7 @@ public class TimeSegmentAdapter {
 				Instant oldValueDateTime = oldValue.toInstant();
 				Instant newValueDateTime = newValue.toInstant();
 				if (!newValueDateTime.equals(oldValueDateTime)) {
-					Duration deltaTime = Duration.between(oldValueDateTime, newValueDateTime);
+					Duration deltaTime = Duration.between(newValueDateTime, oldValueDateTime);
 					getDataManager().addFilteredTotalTime(deltaTime);
 				}
 			}
